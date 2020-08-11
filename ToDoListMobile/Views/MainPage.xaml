@@ -8,6 +8,12 @@
 
     <StackLayout Margin="20, 60, 20, 60"
                  Orientation="Vertical">
+        <Label Text="Email" />
+        <Entry x:Name="EmailEntry"/>
+        <Label Text="Password"/>
+        <Entry x:Name="PasswordEntry"
+               IsPassword="True"/>
+        <Button Text="Log In"
+                Clicked="LogInButton_ClickedAsync"/>
     </StackLayout>
-
 </ContentPage>

@@ -9,7 +9,7 @@ namespace ToDoListMobile
 		{
 			InitializeComponent();
 
-			MainPage = new NavigationPage(new NotesListView());
+			MainPage = new NavigationPage(new MainPage());
 		}
 
 		protected override void OnStart()
