@@ -5,13 +5,9 @@ using System.Threading.Tasks;
 
 namespace ToDoListMobile.Api.Services
 {
-	interface IHttpClientBase
+	public interface IHttpClientBase
 	{
 		string BaseUrl { get; set; }
-
-		string UserAgent { get; set; }
-
-		TimeSpan? Timeout { get; set; }
 
 		string Token { get; set; }
 

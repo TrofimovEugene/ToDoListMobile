@@ -26,14 +26,6 @@ namespace ToDoListMobile.Api.Services
 			private HttpClient HttpClientCreator()
 			{
 				var httpClient = new HttpClient();
-				if (Timeout != null)
-				{
-					httpClient.Timeout = Timeout.Value;
-				}
-				if (string.IsNullOrWhiteSpace(UserAgent))
-				{
-					httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(UserAgent);
-				}
 
 				httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
 
@@ -44,10 +36,6 @@ namespace ToDoListMobile.Api.Services
 			#region Public Propetries
 
 			public string BaseUrl { get; set; }
-
-			public string UserAgent { get; set; }
-
-			public TimeSpan? Timeout { get; set; }
 
 			public string Token { get; set; }
 
