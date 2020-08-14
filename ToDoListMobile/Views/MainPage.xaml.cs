@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel;
+using Autofac;
+using ToDoListMobile.Services.User;
 using ToDoListMobile.ViewModels;
 using Xamarin.Forms;
 
@@ -12,7 +14,7 @@ namespace ToDoListMobile.Views
 		public MainPage()
 		{
 			InitializeComponent();
-			this.BindingContext = new MainPageViewModel() { Navigation = this.Navigation };
+			this.BindingContext = new MainPageViewModel();
 		}
 	}
 }

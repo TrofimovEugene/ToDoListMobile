@@ -10,7 +10,7 @@ namespace ToDoListMobile.Views
         public RegistryUserPage()
         {
             InitializeComponent();
-            this.BindingContext = new RegistryUserPageViewModel() { Navigation = this.Navigation };
+            //this.BindingContext = new RegistryUserPageViewModel() { Navigation = this.Navigation };
         }
     }
 }

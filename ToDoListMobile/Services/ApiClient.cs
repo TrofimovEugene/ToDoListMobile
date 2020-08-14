@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Autofac;
 using Newtonsoft.Json;
 using ToDoListMobile.Api.Services;
 using ToDoListMobile.Services.User;
@@ -24,7 +25,7 @@ namespace ToDoListMobile.Services
 			{
 				if (_userService != null)
 					return _userService;
-				_userService = new UserService(this);
+				_userService = IoC.IoC.Container.Resolve<IUserService>();
 				return _userService;
 			}
 		}
@@ -69,6 +70,11 @@ namespace ToDoListMobile.Services
 				{
 					var responseObject = serializer.Deserialize<TResponse>(json);
 					return responseObject;
+				}
+
+				if (httpResponseMessage.StatusCode == HttpStatusCode.Unauthorized)
+				{
+					
 				}
 
 				throw new Exception(httpResponseMessage.StatusCode.ToString());

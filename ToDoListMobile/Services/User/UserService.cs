@@ -19,7 +19,7 @@ namespace ToDoListMobile.Services.User
         {
             var response = await new AuthenticateUserMethod(_httpClient).ExecuteAsync(
                 new AuthenticateUserMethod.Request(){ Email = username, Password = password}, ct).ConfigureAwait(false);
-            
+            _httpClient.Token = response.AccessToken;
         }
 
         public async Task RegisterAsync(string firstName, string secondName, string email, string password, string organization, string role, DateTime dateOfBirth,
