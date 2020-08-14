@@ -66,7 +66,7 @@ namespace ToDoListMobile.Services.Navigation
 		    var view = container.ResolveKeyed<Element>(viewModelType);
 
 		    view.BindingContext = viewModel;
-		    await Task.WhenAny(_viewPresenter.OpenViewAsync(view), viewModel.InitializeAsync(ct, parameters));
+		    await Task.WhenAny(_viewPresenter.OpenViewAsync(view), viewModel.InitializeAsync(ct));
 
 		    return viewModel;
 	    }

@@ -10,11 +10,9 @@
     <StackLayout Margin="20, 60, 20, 60"
                  Orientation="Vertical">
         <Label Text="Email" />
-        <Entry x:Name="EmailEntry" 
-               Text="{Binding Email}" />
+        <Entry Text="{Binding Email}" />
         <Label Text="Password"/>
-        <Entry x:Name="PasswordEntry"
-               Text="{Binding Password}"
+        <Entry Text="{Binding Password}"
                IsPassword="True"/>
         <Button Text="Log In"
                 Command="{Binding LoginCommand}"/>

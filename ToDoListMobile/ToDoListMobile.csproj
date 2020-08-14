@@ -26,6 +26,10 @@
       <SubType>Designer</SubType>
       <Generator></Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\MainMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator></Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +38,9 @@
     </Compile>
     <Compile Update="Views\RegistryUserPage.xaml.cs">
       <DependentUpon>RegistryUserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\MainMenu.xaml.cs">
+      <DependentUpon>MainMenu.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 

@@ -1,13 +1,18 @@
-﻿using ToDoListMobile.ViewModels;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace ToDoListMobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class RegistryUserPage : ContentPage
+    public partial class MainMenu : ContentPage
     {
-        public RegistryUserPage()
+        public MainMenu()
         {
             InitializeComponent();
         }

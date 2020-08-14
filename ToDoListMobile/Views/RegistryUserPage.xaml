@@ -4,32 +4,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:ToDoListMobile.ViewModels;assembly=ToDoListMobile"
              x:Class="ToDoListMobile.Views.RegistryUserPage" x:DataType="viewmodel:RegistryUserPageViewModel">
-    <ContentPage.Content>
-        <StackLayout Margin="20, 60, 20, 60"
-                     Orientation="Vertical">
-            <Label Text="New user registration"/>
-            <Label Text="First Name" />
-            <Entry x:Name="FirstName" 
-                   Text="{Binding FirstName}"/>
-            <Label Text="Second Name" />
-            <Entry x:Name="SecondName" 
-                   Text="{Binding SecondName}"/>
-            <Label Text="Email" />
-            <Entry x:Name="Email" 
-                   Text="{Binding Email}"/>
-            <Label Text="Password" />
-            <Entry x:Name="Password" 
-                   Text="{Binding Password}"/>
-            <Label Text="Confirm password" />
-            <Entry x:Name="ConfirmPassword" 
-                   Text="{Binding ConfirmPassword}"/>
-            <Label Text="Organization" />
-            <Entry x:Name="Organization" 
-                   Text="{Binding Organization}"/>
-            <Label Text="Date of Birth"/>
-            <DatePicker Date="{Binding DateOfBirth}"/>
-            <Button Text="Registry"
-                    Command="{Binding Registry}"/>
-        </StackLayout>
-    </ContentPage.Content>
+    <StackLayout Margin="20, 60, 20, 60"
+                 Orientation="Vertical">
+        <Label Text="New user registration"/>
+        <Label Text="First Name" />
+        <Entry Text="{Binding FirstName}"/>
+        <Label Text="Second Name" />
+        <Entry Text="{Binding SecondName}"/>
+        <Label Text="Email" />
+        <Entry Text="{Binding Email}"/>
+        <Label Text="Password" />
+        <Entry IsPassword="True"
+               Text="{Binding Password}"/>
+        <Label Text="Confirm password" />
+        <Entry IsPassword="True"
+               Text="{Binding ConfirmPassword}"/>
+        <Label Text="Organization" />
+        <Entry Text="{Binding Organization}"/>
+        <Label Text="Date of Birth"/>
+        <DatePicker Date="{Binding DateOfBirth}"/>
+        <Button Text="Registry"
+                Command="{Binding Registry}"/>
+    </StackLayout>
 </ContentPage>

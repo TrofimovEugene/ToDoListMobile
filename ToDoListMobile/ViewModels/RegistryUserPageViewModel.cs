@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Windows.Input;
 using ToDoListMobile.Services;
+using ToDoListMobile.Services.Navigation;
 using ToDoListMobile.Services.User;
 using ToDoListMobile.Views;
 using Xamarin.Forms;
@@ -10,6 +11,8 @@ namespace ToDoListMobile.ViewModels
 {
     public class RegistryUserPageViewModel : BaseViewModel
     {
+        private IViewModelPresenter _viewModelPresenter;
+        private IUserService _userService;
         public string FirstName { get; set; }
         public string SecondName { get; set; }
         public string Email { get; set; }
@@ -19,11 +22,13 @@ namespace ToDoListMobile.ViewModels
         public DateTime DateOfBirth { get; set; }
         
         public ICommand Registry { get; private set; }
-        public INavigation Navigation { get; set; }
-        
-        public RegistryUserPageViewModel()
+
+        public RegistryUserPageViewModel(IViewModelPresenter viewModelPresenter,
+                                            IUserService userService)
         {
             Registry = new Command(OnRegistryClickButton);
+            _viewModelPresenter = viewModelPresenter;
+            _userService = userService;
         }
 
         private async void OnRegistryClickButton()
@@ -35,14 +40,9 @@ namespace ToDoListMobile.ViewModels
             var confirmPassword = ConfirmPassword;
             var organization = Organization;
             var dateOfBirth = DateOfBirth;
-            
-            var api = new ApiClient()
-            {
-                BaseUrl = @"http://todolist.somee.com/"
-            };
-            var userService = new UserService(api);
+
             if (password.Equals(confirmPassword))
-                await userService.RegisterAsync(firstName,
+                await _userService.RegisterAsync(firstName,
                     secondName,
                     email,
                     password,
@@ -50,7 +50,7 @@ namespace ToDoListMobile.ViewModels
                     "user",
                     dateOfBirth,
                     CancellationToken.None);
-            await Navigation.PushAsync(new MainPage());
+            await _viewModelPresenter.OpenViewModelAsync(typeof(MainPageViewModel), CancellationToken.None, null);
         }
     }
 }

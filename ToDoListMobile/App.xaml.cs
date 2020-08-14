@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Autofac;
-using Autofac.Extras.CommonServiceLocator;
-using Microsoft.Practices.ServiceLocation;
 using Rg.Plugins.Popup.Contracts;
 using Rg.Plugins.Popup.Services;
 using ToDoListMobile.Api.Services;
-using ToDoListMobile.IoC;
 using ToDoListMobile.Models;
 using ToDoListMobile.Services;
 using ToDoListMobile.Services.Navigation;
@@ -20,7 +17,8 @@ namespace ToDoListMobile
 {
 	public partial class App : Application
 	{
-		public Page RootPage { get; set; }
+		private MainPage HomePage { get; set; }
+		private NavigationPage RootPage { get; set; }
 		public App(ContainerBuilder builder)
 		{
 			InitializeComponent();
@@ -32,10 +30,15 @@ namespace ToDoListMobile
 			
 			builder.RegisterType<RegistryUserPage>().Keyed<Element>(typeof(RegistryUserPageViewModel));
 			builder.RegisterType<RegistryUserPageViewModel>().AsSelf();
-			builder.RegisterType<NotesListPage>().Keyed<Element>(typeof(RegistryUserPageViewModel));
+			builder.RegisterType<NotesListPage>().Keyed<Element>(typeof(NotesListPageViewModel));
 			builder.RegisterType<NotesListPageViewModel>().AsSelf();
+			builder.RegisterType<MainMenu>().Keyed<Element>(typeof(MainMenuViewModel));
+			builder.RegisterType<MainMenuViewModel>().AsSelf();
 			
-			RootPage = new NavigationPage(new MainPage());
+			HomePage = new MainPage();
+			builder.RegisterInstance(HomePage).Keyed<Element>(typeof(MainPageViewModel)).SingleInstance();
+			builder.RegisterType<MainPageViewModel>().AsSelf().SingleInstance();
+			RootPage = new NavigationPage(HomePage);
 			
 			var navigation = RootPage.Navigation;
 			builder.RegisterInstance(navigation).As<INavigation>().SingleInstance();
@@ -51,7 +54,7 @@ namespace ToDoListMobile
 			
 			var viewModelPresenter = new ViewModelPresenter(viewPresenter);
 			builder.RegisterInstance(viewModelPresenter).As<IViewModelPresenter>().SingleInstance();
-			
+
 			MainPage = RootPage;
 		}
 		

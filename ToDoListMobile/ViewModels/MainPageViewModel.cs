@@ -14,16 +14,17 @@ namespace ToDoListMobile.ViewModels
 	public class MainPageViewModel : BaseViewModel
 	{
 		private IUserService _userService;
+		private IViewModelPresenter _viewModelPresenter;
 		public ICommand LoginCommand { get; private set; }
 		public ICommand RegistryCommand { get; private set; }
 		public string Email { get; set; }
 		public string Password { get; set; }
 
-		public MainPageViewModel(/*IUserService userService*/)
+		public MainPageViewModel()
 		{
 			RegistryCommand = new Command(OnRegistryButtonClick);
 			LoginCommand = new Command(OnLoginButtonClick);
-			//_userService = userService;
+			
 		}
 
 		private async void OnLoginButtonClick()
@@ -33,14 +34,14 @@ namespace ToDoListMobile.ViewModels
 
 			_userService = IoC.IoC.Container.Resolve<IUserService>();
 			await _userService.LoginAsync(email, password, CancellationToken.None);
-			var viewModelPresenter = IoC.IoC.Container.Resolve<IViewModelPresenter>();
-			await viewModelPresenter.OpenViewModelAsync(typeof(RegistryUserPageViewModel), CancellationToken.None, null);
+			_viewModelPresenter = IoC.IoC.Container.Resolve<IViewModelPresenter>();
+			await _viewModelPresenter.OpenViewModelAsync(typeof(NotesListPageViewModel), CancellationToken.None, null);
 		}
 		
 		private async void OnRegistryButtonClick()
 		{
-			var viewModelPresenter = IoC.IoC.Container.Resolve<IViewModelPresenter>();
-			await viewModelPresenter.OpenViewModelAsync(typeof(RegistryUserPageViewModel), CancellationToken.None, null);
+			_viewModelPresenter = IoC.IoC.Container.Resolve<IViewModelPresenter>();
+			await _viewModelPresenter.OpenViewModelAsync(typeof(RegistryUserPageViewModel), CancellationToken.None, null);
 		}
 	}
 }
