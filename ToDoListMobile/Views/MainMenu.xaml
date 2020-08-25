@@ -6,9 +6,6 @@
              Title="Menu">
         <StackLayout Orientation="Vertical">
             <Button Text="Sports"
-                    Command="{Binding Sports}"/>
-            <Button Text="Economy"/>
-            <Button Text="Education"/>
-            <Button Text="Science"/>
+                    Command="{Binding Sports}" />
         </StackLayout>
 </ContentPage>

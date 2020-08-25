@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -25,12 +26,24 @@ namespace ToDoListMobile.Api.Methods
 
         public class Response
         {
-            [JsonProperty("accessToken")]
-            public string AccessToken { get; set; }
-            [JsonProperty("email")]
-            public string Email { get; set; }
             [JsonProperty("idUser")]
             public int IdUser { get; set; }
+            [JsonProperty("firstName")]
+            public string FirstName { get; set; }
+            [JsonProperty("secondName")]
+            public string SecondName { get; set; }
+            [JsonProperty("email")]
+            public string Email { get; set; }
+            [JsonProperty("password")]
+            public string Password { get; set; }
+            [JsonProperty("organization")]
+            public string Organization { get; set; }
+            [JsonProperty("role")]
+            public string Role { get; set; }
+            [JsonProperty("dateOfBirth")]
+            public DateTime DateOfBirth { get; set; }
+            [JsonProperty("accessToken")]
+            public string AccessToken { get; set; }
         }
 
         public Task<Response> ExecuteAsync(Request request, CancellationToken ct)

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  xmlns:notes="clr-namespace:ToDoListMobile.Views.Note;assembly=ToDoListMobile"
+                  x:Class="ToDoListMobile.Views.Note.NotesListPage">
+    <MasterDetailPage.Detail>
+        <NavigationPage>
+            <x:Arguments>
+                <ContentPage Title="Notes">
+                    <StackLayout>
+                        <Button Text="New note"
+                                Command="{Binding NewNoteCommand}"/>
+                        <ListView x:Name="ListViewNotes" 
+                                  ItemsSource="{Binding Notes}"
+                                  RowHeight="100">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <notes:NoteListViewCell />
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackLayout>
+                </ContentPage>
+            </x:Arguments>
+        </NavigationPage>
+    </MasterDetailPage.Detail>
+</MasterDetailPage>

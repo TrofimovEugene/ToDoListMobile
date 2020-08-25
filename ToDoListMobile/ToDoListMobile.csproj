@@ -18,10 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Views\NotesListPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator></Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Views\RegistryUserPage.xaml">
       <SubType>Designer</SubType>
       <Generator></Generator>
@@ -33,14 +29,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\NotesListPage.xaml.cs">
-      <DependentUpon>NotesListPage.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Views\RegistryUserPage.xaml.cs">
       <DependentUpon>RegistryUserPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Note\NoteView.xaml.cs">
+      <DependentUpon>NoteView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Note\NotesListPage.xaml.cs">
+      <DependentUpon>NotesListPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Autofac;
 using Rg.Plugins.Popup.Contracts;
 using Rg.Plugins.Popup.Services;
+using ToDoListMobile.Api.Methods;
 using ToDoListMobile.Api.Services;
 using ToDoListMobile.Models;
 using ToDoListMobile.Services;
@@ -12,6 +13,7 @@ using ToDoListMobile.Services.User;
 using ToDoListMobile.ViewModels;
 using Xamarin.Forms;
 using ToDoListMobile.Views;
+using ToDoListMobile.Views.Note;
 
 namespace ToDoListMobile
 {
@@ -27,6 +29,11 @@ namespace ToDoListMobile
 				BaseUrl = @"http://todolist.somee.com/" 
 			}).As<IHttpClientBase>().SingleInstance();
 			builder.RegisterType<UserService>().As<IUserService>().SingleInstance();
+
+			builder.RegisterType<CurrentUser>().As<ICurrentUser>().SingleInstance();
+
+			builder.RegisterType<CreateNoteMethod>().SingleInstance();
+			builder.RegisterType<GetNotesMethod>().SingleInstance();
 			
 			builder.RegisterType<RegistryUserPage>().Keyed<Element>(typeof(RegistryUserPageViewModel));
 			builder.RegisterType<RegistryUserPageViewModel>().AsSelf();
