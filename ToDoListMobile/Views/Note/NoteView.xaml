@@ -2,12 +2,19 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ToDoListMobile.Views.Note.NoteView">
+             xmlns:viewmodel="clr-namespace:ToDoListMobile.ViewModels.Note;assembly=ToDoListMobile"
+             x:Class="ToDoListMobile.Views.Note.NoteView"
+             Title="New note">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Hello, world!"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand" />
+            <Label Text="Header" />
+            <Entry x:Name="Header"
+                   Text="{Binding Header}"/>
+            <Label Text="Date Added" />
+            <DatePicker Date="{Binding DateAdded}" />
+            <Label Text="Text" />
+            <Editor Text="{Binding Text}" />
+            <Button Text="Save" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

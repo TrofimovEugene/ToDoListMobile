@@ -10,5 +10,5 @@ namespace ToDoListMobile.Views.Note
         {
             InitializeComponent();
         }
-    }
+	}
 }

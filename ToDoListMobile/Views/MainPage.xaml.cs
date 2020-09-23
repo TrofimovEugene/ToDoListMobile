@@ -1,7 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using Autofac;
 using ToDoListMobile.Services.User;
 using ToDoListMobile.ViewModels;
+using ToDoListMobile.Views.Note;
 using Xamarin.Forms;
 
 namespace ToDoListMobile.Views
@@ -15,6 +17,11 @@ namespace ToDoListMobile.Views
 		{
 			InitializeComponent();
 			this.BindingContext = new MainPageViewModel();
+		}
+
+		public static implicit operator MainPage(NotesListPage v)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

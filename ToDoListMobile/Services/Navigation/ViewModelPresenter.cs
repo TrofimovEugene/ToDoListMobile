@@ -19,7 +19,7 @@ namespace ToDoListMobile.Services.Navigation
             _viewPresenter = viewPresenter;
         }
 
-        /*public async Task<TResult> OpenViewModelAsync<TResult>(Type viewModelType, CancellationToken ct, params Parameter[] parameters)
+        public async Task<TResult> OpenViewModelAsync<TResult>(Type viewModelType, CancellationToken ct, params Parameter[] parameters)
         {
             var viewModel = await OpenViewModelAsync(viewModelType, ct, parameters);
             if (viewModel is IResultPageViewModel<TResult> resultPageViewModel)
@@ -37,7 +37,7 @@ namespace ToDoListMobile.Services.Navigation
 			    return await resultPageViewModel.ResultSource.GetResultAsync();
 		    }
 		    throw new InvalidOperationException("Result route mismatch");
-	    }*/
+	    }
 
         public async Task<BaseViewModel> OpenViewModelAsync(Type viewModelType, CancellationToken ct, params Parameter[] parameters)
         {

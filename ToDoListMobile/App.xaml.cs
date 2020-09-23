@@ -8,9 +8,11 @@ using ToDoListMobile.Api.Services;
 using ToDoListMobile.Models;
 using ToDoListMobile.Services;
 using ToDoListMobile.Services.Navigation;
+using ToDoListMobile.Services.Note;
 using ToDoListMobile.Services.Presenter;
 using ToDoListMobile.Services.User;
 using ToDoListMobile.ViewModels;
+using ToDoListMobile.ViewModels.Note;
 using Xamarin.Forms;
 using ToDoListMobile.Views;
 using ToDoListMobile.Views.Note;
@@ -29,11 +31,13 @@ namespace ToDoListMobile
 				BaseUrl = @"http://todolist.somee.com/" 
 			}).As<IHttpClientBase>().SingleInstance();
 			builder.RegisterType<UserService>().As<IUserService>().SingleInstance();
+			builder.RegisterType<NoteService>().As<INoteService>().SingleInstance();
 
 			builder.RegisterType<CurrentUser>().As<ICurrentUser>().SingleInstance();
 
 			builder.RegisterType<CreateNoteMethod>().SingleInstance();
 			builder.RegisterType<GetNotesMethod>().SingleInstance();
+			builder.RegisterType<DeleteNoteMethod>().SingleInstance();
 			
 			builder.RegisterType<RegistryUserPage>().Keyed<Element>(typeof(RegistryUserPageViewModel));
 			builder.RegisterType<RegistryUserPageViewModel>().AsSelf();
@@ -41,6 +45,8 @@ namespace ToDoListMobile
 			builder.RegisterType<NotesListPageViewModel>().AsSelf();
 			builder.RegisterType<MainMenu>().Keyed<Element>(typeof(MainMenuViewModel));
 			builder.RegisterType<MainMenuViewModel>().AsSelf();
+			builder.RegisterType<NoteView>().Keyed<Element>(typeof(NoteViewModel));
+			builder.RegisterType<NoteViewModel>().AsSelf();
 			
 			HomePage = new MainPage();
 			builder.RegisterInstance(HomePage).Keyed<Element>(typeof(MainPageViewModel)).SingleInstance();
@@ -56,7 +62,8 @@ namespace ToDoListMobile
 			var viewPresenter = new ViewPresenter(navigation, popupNavigation, new Dictionary<Type, PresentationType>
 			{
 				{typeof(RegistryUserPage), PresentationType.Modal},
-				{typeof(NotesListPage), PresentationType.Modal}
+				{typeof(NotesListPage), PresentationType.Modal},
+				{typeof(NoteView), PresentationType.Modal }
 			});
 			
 			var viewModelPresenter = new ViewModelPresenter(viewPresenter);

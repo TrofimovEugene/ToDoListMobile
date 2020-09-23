@@ -8,18 +8,24 @@
         <NavigationPage>
             <x:Arguments>
                 <ContentPage Title="Notes">
-                    <StackLayout>
-                        <Button Text="New note"
-                                Command="{Binding NewNoteCommand}"/>
-                        <ListView x:Name="ListViewNotes" 
-                                  ItemsSource="{Binding Notes}"
-                                  RowHeight="100">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <notes:NoteListViewCell />
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                    <ContentPage.ToolbarItems>
+                        <ToolbarItem Text="New note"
+                                     Command="{Binding NewNoteCommand}"/>
+                    </ContentPage.ToolbarItems>
+                    <StackLayout Orientation="Vertical"
+                                 Margin="10, 10, 10, 10">
+                        <RefreshView Command="{Binding RefreshCommand}"
+                                     IsRefreshing="{Binding IsRefreshing}">
+                            <ListView x:Name="ListViewNotes" 
+                                      ItemsSource="{Binding Notes}"
+                                      RowHeight="180">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <notes:NoteListViewCell />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </RefreshView>
                     </StackLayout>
                 </ContentPage>
             </x:Arguments>

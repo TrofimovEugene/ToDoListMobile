@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="5.2.0" />
-    <PackageReference Include="Autofac.Extras.CommonServiceLocator" Version="4.0.0" />
     <PackageReference Include="LiveXAML" Version="2.1.73" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Polly" Version="7.2.1" />

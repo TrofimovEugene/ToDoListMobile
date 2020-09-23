@@ -1,60 +1,99 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ToDoListMobile.Api.Methods;
-using ToDoListMobile.Api.Shared;
 using ToDoListMobile.Services.Navigation;
+using ToDoListMobile.Services.Note;
 using ToDoListMobile.Services.User;
-using ToDoListMobile.Views;
 using Xamarin.Forms;
 
-namespace ToDoListMobile.ViewModels
+namespace ToDoListMobile.ViewModels.Note
 {
     public class NotesListPageViewModel : BaseViewModel
     {
         private IViewModelPresenter _viewModelPresenter;
-        private ICurrentUser _currentUser;
+
+        private DeleteNoteMethod _deleteNoteMethod;
+
+        private INoteService _noteService;
         //private IUserService _userService;
-        private GetNotesMethod _createNoteMethod;
-        
+
         public NotesListPageViewModel(IViewModelPresenter viewModelPresenter,
-                                      ICurrentUser currentUser,
-                                      GetNotesMethod createNoteMethod)
+                                      DeleteNoteMethod deleteNoteMethod,
+                                      INoteService noteService)
         {
             Sports = new Command(OnButtonSportsClicked);
-            NewNoteCommand = new Command(NewNoteCreate);
+			NewNoteCommand = new Command(async () => await NewNoteCreateAsync(CancellationToken.None));
+            RefreshCommand = new Command(async () => await RefreshAsync());
             _viewModelPresenter = viewModelPresenter;
-            _currentUser = currentUser;
-            _createNoteMethod = createNoteMethod;
+            _deleteNoteMethod = deleteNoteMethod;
+            _noteService = noteService;
             //_userService = userService;
         }
+        
+        public ICommand RefreshCommand { get; set; }
 
-        private List<NoteViewModel> _notes = new List<NoteViewModel>();
-        public List<NoteViewModel> Notes
+        private async Task RefreshAsync()
+        {
+            IsRefreshing = true;
+            var notes = await _noteService.GetNoteListAsync(CancellationToken.None).ConfigureAwait(false);
+            if (notes == null)
+            {
+                IsRefreshing = false;
+                return;
+            }
+
+            Notes.Clear();
+            foreach (var note in notes)
+            {
+                Notes.Add(NoteViewModelExtension.ToViewModel(note, _noteService));
+            }
+
+            IsRefreshing = false;
+        }
+
+        private bool _isRefreshing;
+        public bool IsRefreshing
+        {
+            get => _isRefreshing;
+            set
+            {
+                _isRefreshing = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<NoteViewModel> _notes;
+        public ObservableCollection<NoteViewModel> Notes
         {
             get => _notes;
             set
             {
                 _notes = value;
                 OnPropertyChanged();
-            } }
+            } 
+        }
         public override Task InitializeAsync(CancellationToken ct)
         {
-            var response = _createNoteMethod.ExecuteAsync(new GetNotesMethod.Request() {Id = _currentUser.IdUser}, ct).Result;
-            if (response == null) 
+            var notes = _noteService.GetNoteListAsync(CancellationToken.None).Result;
+            if (notes == null)
                 return base.InitializeAsync(ct);
-            foreach (var note in response)
+            Notes = new ObservableCollection<NoteViewModel>();
+            foreach (var note in notes)
             {
-                Notes.Add(NoteViewModelExtension.ToViewModel(note));
+                Notes.Add(NoteViewModelExtension.ToViewModel(note, _noteService));
             }
             return base.InitializeAsync(ct);
         }
+        
+        
 
-        private void NewNoteCreate()
+        private async Task NewNoteCreateAsync(CancellationToken ct)
         {
-            Debug.WriteLine("New Note!");
+            await _viewModelPresenter.OpenViewModelAsync(typeof(NoteViewModel), ct, null);
         }
         public ICommand NewNoteCommand { get; set; }
         public ICommand Sports { get; set; }

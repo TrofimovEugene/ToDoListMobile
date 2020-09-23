@@ -6,6 +6,7 @@ using ToDoListMobile.Services;
 using ToDoListMobile.Services.Navigation;
 using ToDoListMobile.Services.Presenter;
 using ToDoListMobile.Services.User;
+using ToDoListMobile.ViewModels.Note;
 using ToDoListMobile.Views;
 using Xamarin.Forms;
 

@@ -1,12 +1,14 @@
-﻿using ToDoListMobile.Api.Shared;
+﻿using ToDoListMobile.Api.Methods;
+using ToDoListMobile.Models;
+using ToDoListMobile.Services.Note;
 
-namespace ToDoListMobile.ViewModels
+namespace ToDoListMobile.ViewModels.Note
 {
     public static class NoteViewModelExtension
     {
-        public static NoteViewModel ToViewModel(NoteModel noteModel)
+        public static NoteViewModel ToViewModel(NoteModel noteModel, INoteService userService)
         {
-            return new NoteViewModel()
+            return new NoteViewModel(userService)
             {
                 Id = noteModel.Id,
                 Header = noteModel.Header,
