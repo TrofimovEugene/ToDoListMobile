@@ -50,7 +50,7 @@ namespace ToDoListMobile.ViewModels
                     "user",
                     dateOfBirth,
                     CancellationToken.None);
-            await _viewModelPresenter.OpenViewModelAsync(typeof(MainPageViewModel), CancellationToken.None, null);
+            await _viewModelPresenter.OpenViewModelAsync(typeof(LoginPageViewModel), CancellationToken.None, null);
         }
     }
 }

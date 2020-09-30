@@ -1,34 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
-<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
-                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                  xmlns:notes="clr-namespace:ToDoListMobile.Views.Note;assembly=ToDoListMobile"
-                  x:Class="ToDoListMobile.Views.Note.NotesListPage">
-    <MasterDetailPage.Detail>
-        <NavigationPage>
-            <x:Arguments>
-                <ContentPage Title="Notes">
-                    <ContentPage.ToolbarItems>
-                        <ToolbarItem Text="New note"
-                                     Command="{Binding NewNoteCommand}"/>
-                    </ContentPage.ToolbarItems>
-                    <StackLayout Orientation="Vertical"
-                                 Margin="10, 10, 10, 10">
-                        <RefreshView Command="{Binding RefreshCommand}"
-                                     IsRefreshing="{Binding IsRefreshing}">
-                            <ListView x:Name="ListViewNotes" 
-                                      ItemsSource="{Binding Notes}"
-                                      RowHeight="180">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <notes:NoteListViewCell />
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                        </RefreshView>
-                    </StackLayout>
-                </ContentPage>
-            </x:Arguments>
-        </NavigationPage>
-    </MasterDetailPage.Detail>
-</MasterDetailPage>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:notes="clr-namespace:ToDoListMobile.Views.Note;assembly=ToDoListMobile"
+             x:Class="ToDoListMobile.Views.Note.NotesListPage"
+             Title="Notes">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="New note"
+                     Command="{Binding NewNoteCommand}"/>
+    </ContentPage.ToolbarItems>
+    <StackLayout Orientation="Vertical"
+                 Margin="10, 10, 10, 10">
+        <RefreshView Command="{Binding RefreshCommand}"
+                     IsRefreshing="{Binding IsRefreshing}">
+            <ListView x:Name="ListViewNotes" 
+                      ItemsSource="{Binding Notes}"
+                      RowHeight="180">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <notes:NoteListViewCell />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </RefreshView>
+    </StackLayout>
+</ContentPage>

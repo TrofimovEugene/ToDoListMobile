@@ -15,7 +15,7 @@ namespace ToDoListMobile.ViewModels.Note
     public class NotesListPageViewModel : BaseViewModel
     {
         private IViewModelPresenter _viewModelPresenter;
-
+        private ICurrentUser _currentUser;
         private DeleteNoteMethod _deleteNoteMethod;
 
         private INoteService _noteService;
@@ -23,7 +23,8 @@ namespace ToDoListMobile.ViewModels.Note
 
         public NotesListPageViewModel(IViewModelPresenter viewModelPresenter,
                                       DeleteNoteMethod deleteNoteMethod,
-                                      INoteService noteService)
+                                      INoteService noteService,
+                                      ICurrentUser currentUser)
         {
             Sports = new Command(OnButtonSportsClicked);
 			NewNoteCommand = new Command(async () => await NewNoteCreateAsync(CancellationToken.None));
@@ -31,6 +32,7 @@ namespace ToDoListMobile.ViewModels.Note
             _viewModelPresenter = viewModelPresenter;
             _deleteNoteMethod = deleteNoteMethod;
             _noteService = noteService;
+            _currentUser = currentUser;
             //_userService = userService;
         }
         
@@ -78,6 +80,12 @@ namespace ToDoListMobile.ViewModels.Note
         }
         public override Task InitializeAsync(CancellationToken ct)
         {
+            if (!_currentUser.IsAutorized)
+            {
+                Debug.WriteLine("keeeek");
+                _viewModelPresenter.OpenViewModelAsync(typeof(LoginPageViewModel), ct, null);
+            }
+
             var notes = _noteService.GetNoteListAsync(CancellationToken.None).Result;
             if (notes == null)
                 return base.InitializeAsync(ct);

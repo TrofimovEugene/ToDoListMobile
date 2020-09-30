@@ -10,17 +10,24 @@ namespace ToDoListMobile.Services.User
     {
         private readonly IHttpClientBase _httpClient;
         private readonly ICurrentUser _currentUser;
-        
+        private RegistryUserMethod _registryUserMethod;
+        private AuthenticateUserMethod _authenticateUserMethod;
+
+
         public UserService(IHttpClientBase httpClient,
-                            ICurrentUser currentUser)
+                            ICurrentUser currentUser,
+                            RegistryUserMethod registryUserMethod,
+                            AuthenticateUserMethod authenticateUserMethod)
         {
             _httpClient = httpClient;
             _currentUser = currentUser;
+            _registryUserMethod = registryUserMethod;
+            _authenticateUserMethod = authenticateUserMethod;
         }
         
         public async Task LoginAsync(string username, string password, CancellationToken ct)
         {
-            var response = await new AuthenticateUserMethod(_httpClient).ExecuteAsync(
+            var response = await _authenticateUserMethod.ExecuteAsync(
                 new AuthenticateUserMethod.Request(){ Email = username, Password = password}, ct).ConfigureAwait(false);
             _httpClient.Token = response.AccessToken;
             _currentUser.IdUser = response.IdUser;
@@ -31,12 +38,13 @@ namespace ToDoListMobile.Services.User
             _currentUser.Organization = response.Organization;
             _currentUser.DateOfBirth = response.DateOfBirth;
             _currentUser.AccessToken = response.AccessToken;
+            _currentUser.IsAutorized = true;
         }
 
         public async Task RegisterAsync(string firstName, string secondName, string email, string password, string organization, string role, DateTime dateOfBirth,
             CancellationToken ct)
         {
-            var response = await new RegistryUserMethod(_httpClient).ExecuteAsync(
+            await _registryUserMethod.ExecuteAsync(
                 new RegistryUserMethod.Request()
                 {
                     FirstName = firstName,

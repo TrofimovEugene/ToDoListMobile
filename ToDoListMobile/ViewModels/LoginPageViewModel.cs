@@ -12,7 +12,7 @@ using Xamarin.Forms;
 
 namespace ToDoListMobile.ViewModels
 {
-	public class MainPageViewModel : BaseViewModel
+	public class LoginPageViewModel : BaseViewModel
 	{
 		private IUserService _userService;
 		private IViewModelPresenter _viewModelPresenter;
@@ -21,7 +21,7 @@ namespace ToDoListMobile.ViewModels
 		public string Email { get; set; }
 		public string Password { get; set; }
 
-		public MainPageViewModel()
+		public LoginPageViewModel()
 		{
 			RegistryCommand = new Command(OnRegistryButtonClick);
 			LoginCommand = new Command(OnLoginButtonClick);

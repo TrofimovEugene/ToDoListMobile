@@ -13,5 +13,6 @@ namespace ToDoListMobile.Services.User
         string Role { get; set; }
         DateTime DateOfBirth { get; set; }
         string AccessToken { get; set; }
+        bool IsAutorized { get; set; }
     }
 }

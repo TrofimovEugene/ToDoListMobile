@@ -21,7 +21,8 @@ namespace ToDoListMobile
 {
 	public partial class App : Application
 	{
-		private MainPage HomePage { get; set; }
+		private NotesListPage NotesListPage { get; set; }
+		private MainMenu MainMenu { get; set; }
 		private NavigationPage RootPage { get; set; }
 		public App(ContainerBuilder builder)
 		{
@@ -38,20 +39,29 @@ namespace ToDoListMobile
 			builder.RegisterType<CreateNoteMethod>().SingleInstance();
 			builder.RegisterType<GetNotesMethod>().SingleInstance();
 			builder.RegisterType<DeleteNoteMethod>().SingleInstance();
-			
+			builder.RegisterType<RegistryUserMethod>().SingleInstance();
+			builder.RegisterType<AuthenticateUserMethod>().SingleInstance();
+
+
 			builder.RegisterType<RegistryUserPage>().Keyed<Element>(typeof(RegistryUserPageViewModel));
 			builder.RegisterType<RegistryUserPageViewModel>().AsSelf();
-			builder.RegisterType<NotesListPage>().Keyed<Element>(typeof(NotesListPageViewModel));
-			builder.RegisterType<NotesListPageViewModel>().AsSelf();
 			builder.RegisterType<MainMenu>().Keyed<Element>(typeof(MainMenuViewModel));
 			builder.RegisterType<MainMenuViewModel>().AsSelf();
 			builder.RegisterType<NoteView>().Keyed<Element>(typeof(NoteViewModel));
 			builder.RegisterType<NoteViewModel>().AsSelf();
-			
-			HomePage = new MainPage();
-			builder.RegisterInstance(HomePage).Keyed<Element>(typeof(MainPageViewModel)).SingleInstance();
-			builder.RegisterType<MainPageViewModel>().AsSelf().SingleInstance();
-			RootPage = new NavigationPage(HomePage);
+			builder.RegisterType<LoginPage>().Keyed<Element>(typeof(LoginPageViewModel));
+			builder.RegisterType<LoginPageViewModel>().AsSelf();
+
+			MainMenu = new MainMenu();
+			builder.RegisterInstance(MainMenu).Keyed<Element>(typeof(MainMenuViewModel)).SingleInstance();
+			builder.RegisterType<MainMenuViewModel>().AsSelf().SingleInstance();
+
+			NotesListPage = new NotesListPage();
+			builder.RegisterInstance(NotesListPage).Keyed<Element>(typeof(NotesListPageViewModel));
+			builder.RegisterType<NotesListPageViewModel>().AsSelf();
+
+
+			RootPage = new NavigationPage(NotesListPage);
 			
 			var navigation = RootPage.Navigation;
 			builder.RegisterInstance(navigation).As<INavigation>().SingleInstance();
@@ -61,15 +71,20 @@ namespace ToDoListMobile
 			
 			var viewPresenter = new ViewPresenter(navigation, popupNavigation, new Dictionary<Type, PresentationType>
 			{
-				{typeof(RegistryUserPage), PresentationType.Modal},
-				{typeof(NotesListPage), PresentationType.Modal},
-				{typeof(NoteView), PresentationType.Modal }
+				{typeof(RegistryUserPage), PresentationType.Default},
+				{typeof(NotesListPage), PresentationType.Default},
+				{typeof(NoteView), PresentationType.Default },
+				{typeof(LoginPage), PresentationType.Modal }
 			});
 			
 			var viewModelPresenter = new ViewModelPresenter(viewPresenter);
 			builder.RegisterInstance(viewModelPresenter).As<IViewModelPresenter>().SingleInstance();
 
-			MainPage = RootPage;
+			MainPage = new MainPage
+			{
+				Master = MainMenu,
+				Detail = RootPage
+			};
 		}
 		
 		protected override void OnStart()
